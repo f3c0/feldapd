@@ -216,6 +216,8 @@ get(Tab, DataModule) ->
 %%% =================================================
 
 
+check_node(_Node, []) ->
+	ok;
 check_node(Node, Schema) ->
 	case check_node_objectclass(Node, Schema) of
 		ok ->
