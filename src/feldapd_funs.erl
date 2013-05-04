@@ -132,7 +132,7 @@ add(	_Request = #'AddRequest'{	entry = Entry,
 					{Me, ParentRoute} = feldapd_route:get_me_parent(Entry),
 					case DataModule:read(Tab, ParentRoute) of
 						false -> % nincs parent
-							{ ok, State, feldapd_resp:result(operationsError, Entry, string:concat(["No Parent: ",ParentRoute])) };
+							{ ok, State, feldapd_resp:result(operationsError, Entry, string:concat("No Parent: ", ParentRoute)) };
 						ParentNode = #r_FELDAPD_Node{children = ParentNode_Children} -> % van parent
 							NewNode = feldapd_node:create(Entry, Attributes),
 							case feldapd_schema:check_node(NewNode, feldapd_schema:get(Tab, DataModule)) of
