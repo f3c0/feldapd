@@ -13,8 +13,12 @@
 initialize() ->
 	ets:new(?MODULE, [ordered_set, private]).
 
+normalize_key(Key) ->
+	lists:filter(fun (32) -> false; (_) -> true end, Key).
+
 %% find Tuple = {Key, _} in ets table
-read(Tab, Key) ->
+read(Tab, XKey) ->
+	Key = normalize_key(XKey),
 	case ets:lookup(Tab, Key) of
 		[{Key, Value} | _] ->
 			Value;
@@ -23,13 +27,15 @@ read(Tab, Key) ->
 	end.
 
 %% insert {Key, Value} to ets table
-write(Tab, Key, Value) ->
+write(Tab, XKey, Value) ->
+	Key = normalize_key(XKey),
 	ets:insert(Tab, {Key, Value}).
 % write(_Tab, _Key, Value) ->
 	% {error, {not_Node, Value}}.
 
 
-delete(Tab, Key) ->
+delete(Tab, XKey) ->
+	Key = normalize_key(XKey),
 	ets:delete(Tab, Key).
 
 %% save ets table to file
