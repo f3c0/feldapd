@@ -42,6 +42,7 @@ init(Args) ->
 			DataModule = proplists:get_value(data_module, Args),
 			DataFile = proplists:get_value(data_file, Args),
 			DataTableId = DataModule:load(DataFile),
+			feldapd_funs:check_root(DataTableId, DataModule),
 			feldapd_funs:write_schema(DataTableId, DataModule, Attributes),
 			case feldapd_schema:load_full_schemas(SchemaFiles) of
 				{ok, Schema} ->
