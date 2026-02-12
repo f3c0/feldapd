@@ -351,9 +351,9 @@ search_node__filter(	_Node = #r_FELDAPD_Node{ attributes = NodeAttributes },
 	search_node__filter_present(NodeAttributes, Attribute);
 
 %% node filter unknown - do not apply
-search_node__filter(Node, Filter) ->
+search_node__filter(_Node, Filter) ->
 	io:format(" <===== ### Unknown filter: ~p ~n =====> ~n", [Filter]),
-	Node.
+	false.
 
 %%%%%%%%%%
 %%% custom filters
