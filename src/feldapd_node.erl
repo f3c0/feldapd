@@ -90,14 +90,17 @@ change(Node, Change) ->
 
 
 %% find attribute in attribute list (case insensitive)
-attr_find_ci(_Type, []) ->
+attr_find_ci(Type, Attributes) ->
+	attr_find_ci_rec(string:to_lower(Type), Attributes).
+
+attr_find_ci_rec(_LowerType, []) ->
 	false;
-attr_find_ci(Type, [Attribute = #'PartialAttribute'{type = AttributeType} | Attributes]) ->
-	case string:to_lower(AttributeType) =:= string:to_lower(Type) of
+attr_find_ci_rec(LowerType, [Attribute = #'PartialAttribute'{type = AttributeType} | Attributes]) ->
+	case string:to_lower(AttributeType) =:= LowerType of
 		true ->
 			{ok, Attribute};
 		false ->
-			attr_find_ci(Type, Attributes)
+			attr_find_ci_rec(LowerType, Attributes)
 	end.
 
 %% delete type from attribute (case sensitive)
